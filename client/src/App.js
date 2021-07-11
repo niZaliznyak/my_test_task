@@ -1,23 +1,19 @@
-import logo from './logo.svg';
+import React from 'react';
+import io from "socket.io-client";
 import './App.css';
 
 function App() {
+  const socket = io.connect('http://localhost:4000');
+  socket.emit('start');
+  socket.on('ticker', function(response) {
+    const res = Array.isArray(response) ? response : [response];
+    const json = res.map(item => JSON.stringify(item)).join('\n');
+    console.log('json', json);
+  });
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
     </div>
   );
 }
