@@ -4,7 +4,7 @@ const SET_NEW_QUOTES = "SET_NEW_QUOTES";
 
 let initialState = {
     prevQuotes: [],
-    actualQuotes: ["aaa"]
+    actualQuotes: []
 
 };
 

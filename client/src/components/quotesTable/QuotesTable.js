@@ -1,14 +1,33 @@
 import React from "react";
+import {Table} from "react-bootstrap";
 
 const QuotesTable = ({quotesRates}) => {
-    console.log(quotesRates);
-    return <div className="qutesTable">
-        <ul>
+    return <Table striped bordered hover size="sm">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>ticker</th>
+            <th>change</th>
+            <th>price</th>
+            <th>change_percent</th>
+            <th>dividend</th>
+            <th>yield</th>
+        </tr>
+        </thead>
+        <tbody>
         {quotesRates.map((elem, index) =>
-            <li key={index}>ticker: {elem.ticker} price: {elem.price}</li>
+            <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{elem.ticker}</td>
+                <td>{elem.change}</td>
+                <td>{elem.price}</td>
+                <td>{elem.change_percent}</td>
+                <td>{elem.dividend}</td>
+                <td>{elem.yield}</td>
+            </tr>
         )}
-        </ul>
-    </div>
+        </tbody>
+    </Table>
 };
 
 export default QuotesTable;
