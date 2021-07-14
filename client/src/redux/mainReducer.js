@@ -20,7 +20,7 @@ export const mainReducer = (state = initialState, action) => {
         case STOP_UPDATE_QUOTES:
             return {
                 ...state,
-                stopedQuotes: action.payload
+                stopedQuotes: [...state.stopedQuotes, action.payload]
             }
         default:
             return state;

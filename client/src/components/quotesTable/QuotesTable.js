@@ -1,7 +1,8 @@
 import React from "react";
 import {Button, Table} from "react-bootstrap";
+import {getStopQuotes} from "../../redux/mainReducer";
 
-const QuotesTable = ({quotesRates}) => {
+const QuotesTable = ({quotesRates, getStopQuotes}) => {
     return <Table striped bordered hover size="sm">
         <thead>
         <tr>
@@ -18,7 +19,7 @@ const QuotesTable = ({quotesRates}) => {
         {quotesRates.map((elem, index) =>
             <tr key={index}>
                 <td>{index + 1}</td>
-                <td >{elem.ticker}                 <Button variant="danger">Stop</Button></td>
+                <td >{elem.ticker}                 <Button onClick={()=>getStopQuotes(elem)} variant="danger">Stop</Button></td>
                 <td>{elem.change}</td>
                 <td>{elem.price}</td>
                 <td>{elem.change_percent}</td>

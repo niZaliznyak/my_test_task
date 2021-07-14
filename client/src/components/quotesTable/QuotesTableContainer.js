@@ -2,9 +2,9 @@ import React from 'react';
 import QuotesTable from "./QuotesTable";
 import io from "socket.io-client";
 import {connect, useDispatch, useSelector} from "react-redux";
-import {setNewQuotes} from "../../redux/mainReducer";
+import {getStopQuotes, setNewQuotes} from "../../redux/mainReducer";
 
-let QuotesTableContainer = ({quotesRates, setNewQuotes}) => {
+let QuotesTableContainer = ({quotesRates, setNewQuotes, getStopQuotes}) => {
 
     React.useEffect(() => {
         const socket = io.connect('http://localhost:4000');
@@ -16,7 +16,7 @@ let QuotesTableContainer = ({quotesRates, setNewQuotes}) => {
         });
     }, []);
 
-    return <QuotesTable quotesRates={quotesRates}/>
+    return <QuotesTable quotesRates={quotesRates} getStopQuotes={getStopQuotes}/>
 }
 
 let mapDispatchToProps = (state) => ({
@@ -24,4 +24,4 @@ let mapDispatchToProps = (state) => ({
 });
 
 
-export default connect(mapDispatchToProps, {setNewQuotes})(QuotesTableContainer);
+export default connect(mapDispatchToProps, {setNewQuotes, getStopQuotes})(QuotesTableContainer);
