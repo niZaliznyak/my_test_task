@@ -1,5 +1,5 @@
 import React from "react";
-import {Table} from "react-bootstrap";
+import {Button, Table} from "react-bootstrap";
 
 const QuotesTable = ({quotesRates}) => {
     return <Table striped bordered hover size="sm">
@@ -18,7 +18,7 @@ const QuotesTable = ({quotesRates}) => {
         {quotesRates.map((elem, index) =>
             <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{elem.ticker}</td>
+                <td >{elem.ticker}                 <Button variant="danger">Stop</Button></td>
                 <td>{elem.change}</td>
                 <td>{elem.price}</td>
                 <td>{elem.change_percent}</td>

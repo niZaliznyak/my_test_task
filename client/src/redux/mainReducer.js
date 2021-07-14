@@ -1,11 +1,10 @@
-
-
 const SET_NEW_QUOTES = "SET_NEW_QUOTES";
+const STOP_UPDATE_QUOTES = "STOP_UPDATE_QUOTES";
 
 let initialState = {
     prevQuotes: [],
-    actualQuotes: []
-
+    actualQuotes: [],
+    stopedQuotes: []
 };
 
 export const mainReducer = (state = initialState, action) => {
@@ -18,6 +17,11 @@ export const mainReducer = (state = initialState, action) => {
                 prevQuotes: [...state.actualQuotes],
                 actualQuotes: action.payload
             }
+        case STOP_UPDATE_QUOTES:
+            return {
+                ...state,
+                stopedQuotes: action.payload
+            }
         default:
             return state;
     }
@@ -25,5 +29,6 @@ export const mainReducer = (state = initialState, action) => {
 }
 
 export const setNewQuotes = (payload) => ({type: SET_NEW_QUOTES, payload});
+export const getStopQuotes = (payload) => ({type: STOP_UPDATE_QUOTES, payload});
 
 
