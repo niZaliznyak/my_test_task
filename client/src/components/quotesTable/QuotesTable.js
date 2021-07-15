@@ -19,9 +19,9 @@ const QuotesTable = ({quotesRates, getStopQuotes}) => {
         {quotesRates.map((elem, index) =>
             <tr key={index}>
                 <td>{index + 1}</td>
-                <td >{elem.ticker}                 <Button onClick={()=>getStopQuotes(elem)} variant="danger">Stop</Button></td>
+                <td>{elem.ticker} <Button onClick={() => getStopQuotes(elem)} variant="danger">Stop</Button></td>
                 <td>{elem.change}</td>
-                <td>{elem.price}</td>
+                <td>{elem.price} {elem.difference}</td>
                 <td>{elem.change_percent}</td>
                 <td>{elem.dividend}</td>
                 <td>{elem.yield}</td>
