@@ -1,5 +1,6 @@
 const SET_NEW_QUOTES = "SET_NEW_QUOTES";
 const STOP_UPDATE_QUOTES = "STOP_UPDATE_QUOTES";
+const GET_UPDATE_QUOTES = "GET_UPDATE_QUOTES";
 
 let initialState = {
     prevQuotes: [],
@@ -23,10 +24,11 @@ export const mainReducer = (state = initialState, action) => {
                         newArray[i].difference = "without changes";
                     }
                 }
-                if(stoped.length != 0){
+                if (stoped.length != 0) {
                     stoped.forEach(stopedObj => {
-                      let index = newArray.findIndex(elem => elem.ticker == stopedObj.ticker);
-                      newArray[index] = stopedObj;
+                        stopedObj.isStoped = true;
+                        let index = newArray.findIndex(elem => elem.ticker == stopedObj.ticker);
+                        newArray[index] = stopedObj;
                     });
                 }
                 return newArray;
@@ -45,6 +47,11 @@ export const mainReducer = (state = initialState, action) => {
                 ...state,
                 stopedQuotes: [...state.stopedQuotes, action.payload]
             }
+        case GET_UPDATE_QUOTES:
+            return {
+                ...state,
+                stopedQuotes: state.stopedQuotes.filter(elem => elem == action.payload)
+            }
         default:
             return state;
     }
@@ -53,5 +60,6 @@ export const mainReducer = (state = initialState, action) => {
 
 export const setNewQuotes = (payload) => ({type: SET_NEW_QUOTES, payload});
 export const getStopQuotes = (payload) => ({type: STOP_UPDATE_QUOTES, payload});
+export const getUpdateQuotes = (payload) => ({type: GET_UPDATE_QUOTES, payload});
 
 
