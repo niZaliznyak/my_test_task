@@ -10,30 +10,41 @@ let initialState = {
 
 export const mainReducer = (state = initialState, action) => {
 
+    let differenceBetweenPrice = (array, prevArray, stoped) => {
+        let newArray = [...array]
+        for (let i = 0; i < newArray.length; i++) {
+            if (newArray[i].price < prevArray[i].price) {
+                newArray[i].difference = "down";
+            } else if (newArray[i].price > prevArray[i].price) {
+                newArray[i].difference = "up";
+            } else {
+                newArray[i].difference = "without changes";
+            }
+        }
+        if (stoped.length != 0) {
+            stoped.forEach(stopedObj => {
+                let index = newArray.findIndex(elem => elem.ticker == stopedObj.ticker);
+                newArray[index] = stopedObj;
+            });
+        }
+        return newArray;
+    }
+
+    let setStop = (quotesList, payload) => {
+        let index = quotesList.findIndex(elem => elem.ticker == payload.ticker);
+        quotesList[index].isStoped = true;
+        return quotesList;
+    }
+    let setUpdate = (quotesList, payload) => {
+        let index = quotesList.findIndex(elem => elem.ticker == payload.ticker);
+        quotesList[index].isStoped = false;
+        return quotesList;
+    }
+
     switch (action.type) {
 
-        case SET_NEW_QUOTES :
-            let differenceBetweenPrice = (array, prevArray, stoped) => {
-                let newArray = [...array]
-                for (let i = 0; i < newArray.length; i++) {
-                    if (newArray[i].price < prevArray[i].price) {
-                        newArray[i].difference = "down";
-                    } else if (newArray[i].price > prevArray[i].price) {
-                        newArray[i].difference = "up";
-                    } else {
-                        newArray[i].difference = "without changes";
-                    }
-                }
-                if (stoped.length != 0) {
-                    stoped.forEach(stopedObj => {
-                        stopedObj.isStoped = true;
-                        let index = newArray.findIndex(elem => elem.ticker == stopedObj.ticker);
-                        newArray[index] = stopedObj;
-                    });
-                }
-                return newArray;
-            }
 
+        case SET_NEW_QUOTES :
             return {
                 ...state,
                 prevQuotes: state.prevQuotes.length == 0 ? action.payload : [...state.actualQuotes],
@@ -45,13 +56,17 @@ export const mainReducer = (state = initialState, action) => {
         case STOP_UPDATE_QUOTES:
             return {
                 ...state,
+                actualQuotes: [...setStop(state.actualQuotes, action.payload)],
                 stopedQuotes: [...state.stopedQuotes, action.payload]
             }
+
         case GET_UPDATE_QUOTES:
             return {
                 ...state,
-                stopedQuotes: state.stopedQuotes.filter(elem => elem == action.payload)
+                actualQuotes: [...setUpdate(state.actualQuotes, action.payload)],
+                stopedQuotes: state.stopedQuotes.filter(elem => elem != action.payload)
             }
+
         default:
             return state;
     }
