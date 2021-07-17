@@ -15,7 +15,6 @@ export const mainReducer = (state = initialState, action) => {
             let differenceBetweenPrice = (array, prevArray) => {
                 let newArray = [...array]
                 for (let i = 0; i < newArray.length; i++) {
-                    debugger;
                     if (newArray[i].price < prevArray[i].price) {
                         newArray[i].difference = "down";
                     } else if (newArray[i].price > prevArray[i].price) {
@@ -28,9 +27,9 @@ export const mainReducer = (state = initialState, action) => {
             }
             return {
                 ...state,
-                prevQuotes: [...state.actualQuotes],
+                prevQuotes: state.prevQuotes.length == 0 ? action.payload : [...state.actualQuotes],
                 actualQuotes: state.actualQuotes.length != 0 && state.prevQuotes.length != 0 ?
-                    differenceBetweenPrice(action.payload, [...state.actualQuotes])
+                    differenceBetweenPrice(action.payload, state.actualQuotes)
                     : action.payload
             }
 
