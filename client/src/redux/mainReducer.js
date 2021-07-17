@@ -30,14 +30,13 @@ export const mainReducer = (state = initialState, action) => {
         return newArray;
     }
 
-    let setStop = (quotesList, payload) => {
+    let stopUpdateToggle = (quotesList, payload) => {
         let index = quotesList.findIndex(elem => elem.ticker == payload.ticker);
-        quotesList[index].isStoped = true;
-        return quotesList;
-    }
-    let setUpdate = (quotesList, payload) => {
-        let index = quotesList.findIndex(elem => elem.ticker == payload.ticker);
-        quotesList[index].isStoped = false;
+        if(quotesList[index].isStoped == undefined || quotesList[index].isStoped == false){
+            quotesList[index].isStoped = true;
+        }else if(quotesList[index].isStoped == true){
+            quotesList[index].isStoped = false;
+        }
         return quotesList;
     }
 
@@ -56,14 +55,14 @@ export const mainReducer = (state = initialState, action) => {
         case STOP_UPDATE_QUOTES:
             return {
                 ...state,
-                actualQuotes: [...setStop(state.actualQuotes, action.payload)],
+                actualQuotes: [...stopUpdateToggle(state.actualQuotes, action.payload)],
                 stopedQuotes: [...state.stopedQuotes, action.payload]
             }
 
         case GET_UPDATE_QUOTES:
             return {
                 ...state,
-                actualQuotes: [...setUpdate(state.actualQuotes, action.payload)],
+                actualQuotes: [...stopUpdateToggle(state.actualQuotes, action.payload)],
                 stopedQuotes: state.stopedQuotes.filter(elem => elem != action.payload)
             }
 
