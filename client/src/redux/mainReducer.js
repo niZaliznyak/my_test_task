@@ -12,7 +12,7 @@ export const mainReducer = (state = initialState, action) => {
     switch (action.type) {
 
         case SET_NEW_QUOTES :
-            let differenceBetweenPrice = (array, prevArray) => {
+            let differenceBetweenPrice = (array, prevArray, stoped) => {
                 let newArray = [...array]
                 for (let i = 0; i < newArray.length; i++) {
                     if (newArray[i].price < prevArray[i].price) {
@@ -23,13 +23,20 @@ export const mainReducer = (state = initialState, action) => {
                         newArray[i].difference = "without changes";
                     }
                 }
+                if(stoped.length != 0){
+                    stoped.forEach(stopedObj => {
+                      let index = newArray.findIndex(elem => elem.ticker == stopedObj.ticker);
+                      newArray[index] = stopedObj;
+                    });
+                }
                 return newArray;
             }
+
             return {
                 ...state,
                 prevQuotes: state.prevQuotes.length == 0 ? action.payload : [...state.actualQuotes],
                 actualQuotes: state.actualQuotes.length != 0 && state.prevQuotes.length != 0 ?
-                    differenceBetweenPrice(action.payload, state.actualQuotes)
+                    differenceBetweenPrice(action.payload, state.actualQuotes, state.stopedQuotes)
                     : action.payload
             }
 
@@ -47,16 +54,4 @@ export const mainReducer = (state = initialState, action) => {
 export const setNewQuotes = (payload) => ({type: SET_NEW_QUOTES, payload});
 export const getStopQuotes = (payload) => ({type: STOP_UPDATE_QUOTES, payload});
 
-let differenceBetweenPrice = (newArray, prevArray) => {
-    for (let i = 0; i < newArray.length; i++) {
-        if (newArray[i].price < prevArray[i].price) {
-            newArray[i].difference = "down";
-        } else if (newArray[i].price > prevArray[i].price) {
-            newArray[i].difference = "up";
-        } else {
-            newArray[i].difference = "without changes";
-        }
-    }
-    return newArray;
-}
 
