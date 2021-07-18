@@ -14,9 +14,9 @@ export const mainReducer = (state = initialState, action) => {
         let newArray = [...array]
         for (let i = 0; i < newArray.length; i++) {
             if (newArray[i].price < prevArray[i].price) {
-                newArray[i].difference = "down";
+                newArray[i].difference = "DOWN";
             } else if (newArray[i].price > prevArray[i].price) {
-                newArray[i].difference = "up";
+                newArray[i].difference = "UP";
             } else {
                 newArray[i].difference = "without changes";
             }

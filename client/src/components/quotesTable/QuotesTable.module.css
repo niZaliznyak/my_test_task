@@ -1,0 +1,14 @@
+td[data-difference="DOWN"]{
+    background-color: rgba(255, 95, 95, 0.75);
+    color: #840e0e;
+    font-weight: bolder;
+}
+td[data-difference="UP"]{
+ background-color: rgba(0, 255, 19, 0.55);
+    color: #014201;
+    font-weight: bolder;
+}
+
+td[data-difference]{
+    font-weight: bolder;
+}

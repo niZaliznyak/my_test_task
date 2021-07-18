@@ -1,5 +1,6 @@
 import React from "react";
 import {Button, Table} from "react-bootstrap";
+import style from "./QuotesTable.module.css";
 
 const QuotesTable = ({quotesRates, getStopQuotes, getUpdateQuotes}) => {
 
@@ -8,6 +9,7 @@ const QuotesTable = ({quotesRates, getStopQuotes, getUpdateQuotes}) => {
         <tr>
             <th>#</th>
             <th>ticker</th>
+            <th>stop/update</th>
             <th>change</th>
             <th>price</th>
             <th>change_percent</th>
@@ -19,13 +21,13 @@ const QuotesTable = ({quotesRates, getStopQuotes, getUpdateQuotes}) => {
         {quotesRates.map((elem, index) =>
             <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{elem.ticker}
-                    {elem.isStoped
+                <td>{elem.ticker}</td>
+                <td>{elem.isStoped
                         ? <Button onClick={() => getUpdateQuotes(elem)} variant="success">Update</Button>
                         : <Button onClick={() => getStopQuotes(elem)} variant="warning">Stop</Button>}
                 </td>
                 <td>{elem.change}</td>
-                <td>{elem.price} {elem.difference}</td>
+                <td data-difference={elem.difference}>{elem.price}</td>
                 <td>{elem.change_percent}</td>
                 <td>{elem.dividend}</td>
                 <td>{elem.yield}</td>
