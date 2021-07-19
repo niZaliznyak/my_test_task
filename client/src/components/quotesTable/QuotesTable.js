@@ -1,8 +1,11 @@
 import React from "react";
 import {Button, Table} from "react-bootstrap";
-import style from "./QuotesTable.module.css";
+import "./QuotesTable.module.css";
 
 const QuotesTable = ({quotesRates, getStopQuotes, getUpdateQuotes}) => {
+    if(!quotesRates.length) {
+        return null;
+    }
 
     return <Table striped bordered hover size="sm">
         <thead>
@@ -24,7 +27,7 @@ const QuotesTable = ({quotesRates, getStopQuotes, getUpdateQuotes}) => {
                 <td>{elem.ticker}</td>
                 <td>{elem.isStoped
                         ? <Button onClick={() => getUpdateQuotes(elem)} variant="success">Update</Button>
-                        : <Button onClick={() => getStopQuotes(elem)} variant="warning">Stop</Button>}
+                        : <Button onClick={() => getStopQuotes(elem)} variant="primary">Stop</Button>}
                 </td>
                 <td>{elem.change}</td>
                 <td data-difference={elem.difference}>{elem.price}</td>

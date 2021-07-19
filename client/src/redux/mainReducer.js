@@ -1,3 +1,5 @@
+import io from "socket.io-client";
+
 const SET_NEW_QUOTES = "SET_NEW_QUOTES";
 const STOP_UPDATE_QUOTES = "STOP_UPDATE_QUOTES";
 const GET_UPDATE_QUOTES = "GET_UPDATE_QUOTES";
@@ -75,5 +77,13 @@ export const mainReducer = (state = initialState, action) => {
 export const setNewQuotes = (payload) => ({type: SET_NEW_QUOTES, payload});
 export const getStopQuotes = (payload) => ({type: STOP_UPDATE_QUOTES, payload});
 export const getUpdateQuotes = (payload) => ({type: GET_UPDATE_QUOTES, payload});
+
+export const getConnectTo_io = () => (dispatch) => {
+    const socket = io.connect('http://localhost:4000');
+    socket.emit('start');
+    socket.on('ticker', (response) => {
+        dispatch(setNewQuotes(response));
+    });
+}
 
 
