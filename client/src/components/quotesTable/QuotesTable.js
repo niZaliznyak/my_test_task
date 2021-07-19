@@ -3,7 +3,7 @@ import {Button, Table} from "react-bootstrap";
 import "./QuotesTable.module.css";
 
 const QuotesTable = ({quotesRates, getStopQuotes, getUpdateQuotes}) => {
-    if(!quotesRates.length) {
+    if(quotesRates == undefined) {
         return null;
     }
 
