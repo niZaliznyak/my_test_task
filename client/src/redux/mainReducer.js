@@ -33,7 +33,7 @@ export const mainReducer = (state = initialState, action) => {
     }
 
     let stopUpdateToggle = (quotesList, payload) => {
-        let index = quotesList.findIndex(elem => elem.ticker === payload.ticker);
+        let index = quotesList.findIndex(elem => elem.ticker == payload.ticker);
         if(quotesList[index].isStoped === undefined || quotesList[index].isStoped === false){
             quotesList[index].isStoped = true;
         }else if(quotesList[index].isStoped === true){
