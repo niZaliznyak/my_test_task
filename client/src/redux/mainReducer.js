@@ -23,9 +23,9 @@ export const mainReducer = (state = initialState, action) => {
                 newArray[i].difference = "without changes";
             }
         }
-        if (stoped.length != 0) {
+        if (stoped.length !== 0) {
             stoped.forEach(stopedObj => {
-                let index = newArray.findIndex(elem => elem.ticker == stopedObj.ticker);
+                let index = newArray.findIndex(elem => elem.ticker === stopedObj.ticker);
                 newArray[index] = stopedObj;
             });
         }
@@ -33,10 +33,10 @@ export const mainReducer = (state = initialState, action) => {
     }
 
     let stopUpdateToggle = (quotesList, payload) => {
-        let index = quotesList.findIndex(elem => elem.ticker == payload.ticker);
-        if(quotesList[index].isStoped == undefined || quotesList[index].isStoped == false){
+        let index = quotesList.findIndex(elem => elem.ticker === payload.ticker);
+        if(quotesList[index].isStoped === undefined || quotesList[index].isStoped === false){
             quotesList[index].isStoped = true;
-        }else if(quotesList[index].isStoped == true){
+        }else if(quotesList[index].isStoped === true){
             quotesList[index].isStoped = false;
         }
         return quotesList;
@@ -48,8 +48,8 @@ export const mainReducer = (state = initialState, action) => {
         case SET_NEW_QUOTES :
             return {
                 ...state,
-                prevQuotes: state.prevQuotes.length == 0 ? action.payload : [...state.actualQuotes],
-                actualQuotes: state.actualQuotes.length != 0 && state.prevQuotes.length != 0 ?
+                prevQuotes: state.prevQuotes.length === 0 ? action.payload : [...state.actualQuotes],
+                actualQuotes: state.actualQuotes.length !== 0 && state.prevQuotes.length !== 0 ?
                     differenceBetweenPrice(action.payload, state.actualQuotes, state.stopedQuotes)
                     : action.payload
             }
@@ -65,7 +65,7 @@ export const mainReducer = (state = initialState, action) => {
             return {
                 ...state,
                 actualQuotes: [...stopUpdateToggle(state.actualQuotes, action.payload)],
-                stopedQuotes: state.stopedQuotes.filter(elem => elem != action.payload)
+                stopedQuotes: state.stopedQuotes.filter(elem => elem.ticker !== action.payload.ticker)
             }
 
         default:

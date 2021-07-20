@@ -220,7 +220,7 @@ let getUpdateQuotesAction = getUpdateQuotes({
     change: '64.28',
     change_percent: '0.50',
     dividend: '0.12',
-    'yield': '0.53',
+    yield: '0.53',
     last_trade_time: '2021-07-19T16:47:23.000Z',
     isStoped: true
 });
@@ -263,6 +263,26 @@ it("selected qoutes must be added to stopedQuotes", () => {
         isStoped: true
     });
 });
+
+
+it("selected qoutes must be deleted from stopedQuotes", () => {
+
+    let newState = mainReducer(testState, getUpdateQuotesAction);
+    expect(newState.stopedQuotes.length).toBe(1);
+    expect(newState.stopedQuotes).not.toContain({
+        ticker: 'GOOGL',
+        exchange: 'NASDAQ',
+        price: '199.78',
+        change: '64.28',
+        change_percent: '0.50',
+        dividend: '0.12',
+        'yield': '0.53',
+        last_trade_time: '2021-07-19T16:47:23.000Z',
+        isStoped: true
+    });
+    console.log(newState.stopedQuotes);
+});
+
 
 
 

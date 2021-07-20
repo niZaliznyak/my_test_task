@@ -7,7 +7,7 @@ let QuotesTableContainer = ({quotesRates, getStopQuotes, getUpdateQuotes, getCon
 
     React.useEffect(() => {
         getConnectTo_io();
-    }, []);
+    }, [getConnectTo_io]);
 
     return <QuotesTable quotesRates={quotesRates} getStopQuotes={getStopQuotes} getUpdateQuotes={getUpdateQuotes}/>
 }
